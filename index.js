@@ -5,6 +5,9 @@ const express = require('express'),
     alexa = require('alexa-app'),
     alexaApp = new alexa.app('Node Saga');
 
+	console.log('alexaApp Data');
+	console.log(alexaApp);
+	
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,9 +17,10 @@ const server = app.listen(process.env.PORT || 5000, () => {
 });
 
 app.post('/', function (req, res) {
-    alexaApp.launch(function(request, response) {
+	console.log("Inside post method");
+    alexaApp.launch(function(req, res) {
 		console.log('launch');
-		alexaApp.db.loadSession(request.userId).then((savedSession) => {
+		alexaApp.db.loadSession(req.userId).then((savedSession) => {
 			console.log('loaded session ', savedSession);
 			var say = [];
 			var used = [];
@@ -27,7 +31,7 @@ app.post('/', function (req, res) {
 				var all = JSON.parse(session.all || '{}');
 				used = Object.keys(all);
 				Object.keys(session).forEach((key) => {
-					response.session(key, savedSession[key]);
+					res.session(key, savedSession[key]);
 				});
 			}
 			say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
@@ -38,10 +42,15 @@ app.post('/', function (req, res) {
 				say.push('<s>To hear a question again, say repeat.</s>');
 				say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
 			}
-			//say = say.concat(alexaApp.startQuiz(response, used));
-			response.say(say.join('\n'));
-			response.send();
+			//say = say.concat(alexaApp.startQuiz(res, used));
+			res.say(say.join('\n'));
+			res.send();
 		});
 		return false;  // wait for promise to resolve
 	});
+	
+	alexaApp.error = function(e, req, res){
+		console.log(e);
+		throw e;
+	}
 });
