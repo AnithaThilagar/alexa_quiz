@@ -1,0 +1,29 @@
+{
+  "name": "alexa_quiz",
+  "version": "1.0.0",
+  "description": "To create simple quiz for node js using Alexa",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnithaThilagar/alexa_quiz.git"
+  },
+  "keywords": [
+    "alexa",
+    "node"
+  ],
+  "author": "AnithaThilagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnithaThilagar/alexa_quiz/issues"
+  },
+  "homepage": "https://github.com/AnithaThilagar/alexa_quiz#readme",
+  "dependencies": {
+  	"body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "request": "^2.83.0",
+	"alexa-sdk": "^1.0.25"
+  }
+}
