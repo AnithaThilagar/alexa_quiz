@@ -12,6 +12,8 @@ alexaApp.express({
 	checkCert: false,
 	debug: true
 });
+console.log('Before Alexa App data');
+console.log(alexaApp);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
