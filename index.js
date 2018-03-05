@@ -1,7 +1,9 @@
 'use strict';
 
 const express = require('express'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    alexa = require('alexa-app'),
+    alexaApp = new alexa.app('Node Saga');
 
 const app = express();
 app.use(bodyParser.json());
@@ -12,5 +14,5 @@ const server = app.listen(process.env.PORT || 5000, () => {
 });
 
 app.post('/', function (req, res) {
-    alexa = require('./alexa')(req, res);
+    
 });
