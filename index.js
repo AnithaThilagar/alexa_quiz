@@ -27,4 +27,15 @@ app.post('/', function (req, res) {
 		console.log('Test');
 		res.say("You launched the app!");
 	});
+	
+	alexaApp.intent("HelloWorld", {
+		"slots": {},
+		"utterances": [
+		  "Hello World"
+		]
+	  },
+	  function(request, response) {
+		response.say("Success!");
+	  }
+	);
 });
