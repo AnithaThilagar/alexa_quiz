@@ -98,16 +98,15 @@ alexaApp.launch(function (request, response) {
         }
 		console.log('Line 1');
         say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
-        if (!savedSession) {
+        /*if (!savedSession) {
 			console.log('New session');
             say.push('<s>Each quiz has ten questions.</s>');
             say.push("<s>I'll ask a multiple choice or true false question.</s>");
             say.push('<s>Say true, false, or the letter matching your answer.</s>');
             say.push('<s>To hear a question again, say repeat.</s>');
             say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
-        }
-		console.log('Line 2');
-        //say = say.concat(alexaApp.startQuiz(response, used));
+        }*/
+		//say = say.concat(alexaApp.startQuiz(response, used));
 		//console.log("Say "+say);
         response.say(say.join('\n'));
         response.send();
