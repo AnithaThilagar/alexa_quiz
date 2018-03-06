@@ -2,7 +2,9 @@
 
 const express = require('express'),
     bodyParser = require('body-parser'),
-    AlexaAppServer = require('alexa-app-server');
+    AlexaAppServer = require('alexa-app-server'),
+    alexa = require('alexa-app'),
+    alexaApp = new alexa.app('Node Saga');
 	
 var app = express();
 app.use(bodyParser.json());
@@ -33,13 +35,13 @@ function buildResponse(title, output, repromptText, shouldEndSession){
 	};
 }
 
-function sendResponse(sessionAttributes, speechResponse){
+/*function sendResponse(sessionAttributes, speechResponse){
 	return {
 		version: '1.0',
 		sessionAttributes,
 		response: speechResponse
 	};
-}
+}*/
 
 function welcomeMessage(callback){
 	const sessionAttributes = {},
@@ -103,13 +105,12 @@ function onSessionEnded(sessionEndedRequest, session) {
 }
 
 app.post('/', (req, res) => {
-	function callback(error, response){
+    function callback(error, response) {
+        console.log('Inside callback');
+        console.log(response);
 		res.json(response);
 		return true;
-	}
-	
-	console.log(callback);
-	
+    };
 	let event = req.body;
 	console.log(event);
 	
