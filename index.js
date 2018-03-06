@@ -48,7 +48,7 @@ function welcomeMessage(callback){
 	repromptText = 'Welcome Test2',
     shouldEndSession = false;
     console.log('**Session 1** ' + shouldEndSession);
-	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+    return Promise.resolve(callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession)));
 }
 
 function getHelloWorld(intent, session, callback) {
@@ -58,8 +58,7 @@ function getHelloWorld(intent, session, callback) {
         repromptText = 'Hello World Again!',
         shouldEndSession = true;
     console.log('**Session 2** ' + shouldEndSession);
-    callback(sessionAttributes,
-        buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+    return Promise.resolve(callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession)));
 }
 
 function handleSessionEndRequest(callback){
@@ -67,7 +66,7 @@ function handleSessionEndRequest(callback){
 	speechOutput = 'Thank you. Try again',
     shouldEndSession = true;
     console.log('**Session 3** ' + shouldEndSession);
-	callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
+    return Promise.resolve(callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession)));
 }
 
 function onSessionStarted(sessionStartedRequest, session) {
@@ -139,5 +138,4 @@ app.post('/', (req, res) => {
         onSessionEnded(event.request, event.session);
         callback();
     }
-	
 });
