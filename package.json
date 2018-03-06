@@ -2,9 +2,9 @@
   "name": "alexa_quiz",
   "version": "1.0.0",
   "description": "To create simple quiz for node js using Alexa",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
