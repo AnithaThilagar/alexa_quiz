@@ -59,10 +59,12 @@ alexaApp.card = function (current) {
 };
 
 alexaApp.startQuiz = function (response, used) {
+	console.log('Inside Start Quiz');
     var say = ['<s>First question:</s>'];
     // set current list of questions to empty
     response.session('current', '{}');
     var q = quiz.getNextQuestion(used);
+	console.log('Q is - '+q);
     if (q) {
         say.push(q.questionAndAnswers());
         response.session('q', q.id);
