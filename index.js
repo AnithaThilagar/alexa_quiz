@@ -33,12 +33,12 @@ function buildResponse(title, output, repromptText, shouldEndSessionValue) {
 	};
 }
 
-function sendResponse(sessionAttributes, speechResponse){
-	return {
+function sendResponse(res, sessionAttributes, speechResponse){
+	return res.json({
 		version: '1.0',
 		sessionAttributes,
 		response: speechResponse
-	};
+	});
 }
 
 function welcomeMessage(callback){
@@ -107,15 +107,8 @@ function onSessionEnded(sessionEndedRequest, session) {
 }
 
 app.post('/', (req, res) => {
-    function callback(error, response) {
-        console.log('Inside callback');
-        console.log(response);
-		res.json(response);
-		return true;
-    };
-	let event = req.body;
+    let event = req.body;
 	console.log(event);
-	
     if (event.session.new) {
         console.log('Inside new session');
 		onSessionStarted({requestId: event.request.requestId}, event.session);
@@ -125,13 +118,15 @@ app.post('/', (req, res) => {
         console.log('Inside the launch request');
         onLaunch(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
-                callback(null, buildResponse(sessionAttributes, speechletResponse));
+                sendResponse(res, sessionAttributes, speechletResponse);
+                //callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'IntentRequest') {
         console.log('Inside the intent request');
         onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 console.log("Session Attr " + JSON.stringify(sessionAttributes) + "\n " + JSON.stringify(speechletResponse));
+                sendResponse(res, sessionAttributes, speechletResponse);
                 //callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'SessionEndedRequest') {
