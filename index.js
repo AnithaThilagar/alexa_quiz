@@ -4,7 +4,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     alexa = require('alexa-app'),
     app = express(),
-    alexaApp = new alexa.app("Node Saga");
+    alexaApp = new alexa.app("NodeSaga");
 
 alexaApp.express({
     expressApp: app,
