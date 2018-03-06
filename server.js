@@ -225,11 +225,11 @@ alexaApp.intent('AnswerIntent',
         Object.keys(session).forEach((key) => {
             response.session(key, session[key]);
         });
-        alexaApp.db.saveSession(request.userId, session).then(() => {
+        return Promise.resolve(alexaApp.db.saveSession(request.userId, session).then(() => {
             response.say(say.join('\n'));
             response.send();
-        });
-        return false;
+        }));
+        //return false;
     }
 );
 
