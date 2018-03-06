@@ -126,7 +126,6 @@ app.post('/', (req, res) => {
     } else if (event.request.type === 'SessionEndedRequest') {
         console.log("Inside session end");
         onSessionEnded(event.request, event.session);
-        sendResponse(res, sessionAttributes, speechletResponse);
     }
 	
 });
