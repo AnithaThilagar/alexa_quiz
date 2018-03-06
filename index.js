@@ -50,6 +50,17 @@ function welcomeMessage(callback){
 	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
+function getHelloWorld(intent, session, callback) {
+    const sessionAttributes = {},
+        cardTitle = 'Hello World',
+        speechOutput = 'Welcome to Hello World.',
+        repromptText = 'Hello World Again!',
+        shouldEndSession = true;
+
+    callback(sessionAttributes,
+        buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+}
+
 function handleSessionEndRequest(callback){
 	const cardTitle = 'Session Ended',
 	speechOutput = 'Thank you. Try again',
@@ -57,7 +68,18 @@ function handleSessionEndRequest(callback){
 	callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
-function handleIntent(req, session, callback){
+function onSessionStarted(sessionStartedRequest, session) {
+    console.log(`onSessionStarted requestId=${sessionStartedRequest.requestId}, sessionId=${session.sessionId}`);
+}
+
+function onLaunch(launchRequest, session, callback) {
+    console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
+
+    // Dispatch to your skill's launch.
+    getWelcomeResponse(callback);
+}
+
+function onIntent(req, session, callback){
 	console.log(`Inside handle Intent Req Id = ${req.requestId}, session = ${session.sessionId}`);
 	
 	const intent = req.intent,
@@ -75,6 +97,11 @@ function handleIntent(req, session, callback){
     }
 }
 
+function onSessionEnded(sessionEndedRequest, session) {
+    console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
+    // Add cleanup logic here
+}
+
 app.post('/', (req, res) => {
 	function callback(error, response){
 		res.json(response);
@@ -87,20 +114,16 @@ app.post('/', (req, res) => {
 	console.log(event);
 	
 	if(event.session.new){
-		onSessionStarted({
-			requestId: event.request.requestId
-		}, event.session);
+		onSessionStarted({requestId: event.request.requestId}, event.session);
 	}
 	
 	if (event.request.type === 'LaunchRequest') {
-        onLaunch(event.request,
-            event.session,
+        onLaunch(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'IntentRequest') {
-        onIntent(event.request,
-            event.session,
+        onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
