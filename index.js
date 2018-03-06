@@ -44,11 +44,10 @@ function sendResponse(res, sessionAttributes, speechResponse){
 function welcomeMessage(callback){
 	const sessionAttributes = {},
 	cardTitle = 'Welcome',
-	speechOutput = 'Welcome Test',
-	repromptText = 'Welcome Test2',
+	speechOutput = 'Welcome to Node Saga',
+	repromptText = 'Welcome back',
     shouldEndSession = false;
-    console.log('**Session 1** ' + shouldEndSession);
-	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+    callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
 function getHelloWorld(intent, session, callback) {
@@ -57,7 +56,6 @@ function getHelloWorld(intent, session, callback) {
         speechOutput = 'Welcome to Hello World.',
         repromptText = 'Hello World Again!',
         shouldEndSession = true;
-    console.log('**Session 2** ' + shouldEndSession);
     callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
@@ -65,8 +63,7 @@ function handleSessionEndRequest(callback){
 	const cardTitle = 'Session Ended',
 	speechOutput = 'Thank you. Try again',
     shouldEndSession = true;
-    console.log('**Session 3** ' + shouldEndSession);
-	callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
+    callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
 function onSessionStarted(sessionStartedRequest, session) {
@@ -87,8 +84,8 @@ function onIntent(req, session, callback){
 	intentName = intent.name;
 	
 	if(intentName === 'HelloWorld'){
-		console.log('Inside HelloWorld');
-        welcomeMessage(callback);
+        console.log('Inside HelloWorld');
+        getHelloWorld(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
         console.log('Inside Help');
         welcomeMessage(callback);
@@ -122,17 +119,14 @@ app.post('/', (req, res) => {
                 //callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'IntentRequest') {
-        console.log('Inside the intent request');
         onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
-                console.log("Session Attr " + JSON.stringify(sessionAttributes) + "\n " + JSON.stringify(speechletResponse));
                 sendResponse(res, sessionAttributes, speechletResponse);
-                //callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'SessionEndedRequest') {
         console.log("Inside session end");
         onSessionEnded(event.request, event.session);
-        callback();
+        sendResponse(res, sessionAttributes, speechletResponse);
     }
 	
 });
