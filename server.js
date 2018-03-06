@@ -5,8 +5,7 @@ const express = require('express'),
     alexa = require('alexa-app'),
     app = express(),
     alexaApp = new alexa.app("NodeSaga"),
-    quiz = require('./quiz'),
-	Promise = require('bluebird');
+    quiz = require('./quiz');
 
 alexaApp.db = require('./db/mock-db');
 
@@ -83,7 +82,7 @@ alexaApp.launch(function (request, response) {
 	say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
     response.say(say.join('\n'));
 	response.send();*/
-	return new Promise(alexaApp.db.loadSession(request.userId).then((savedSession) => {
+	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
         var say = [];
         var used = [];
@@ -108,7 +107,7 @@ alexaApp.launch(function (request, response) {
         }
         //say = say.concat(alexaApp.startQuiz(response, used));
         response.say(say.join('\n'));
-        return resolve(response.send());
+        response.send();
     }));
     //return false;  // wait for promise to resolve
 });
