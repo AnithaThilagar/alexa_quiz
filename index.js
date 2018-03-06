@@ -11,9 +11,9 @@ const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
 
-function buildResponse(title, output, repromptText, shouldEndSession) {
-    console.log("--Session--" + shouldEndSession);
-    return Promise.resolve({
+function buildResponse(title, output, repromptText, shouldEndSessionValue) {
+    console.log("--Session--" + shouldEndSessionValue);
+	return {
 		outputSpeech: {
 			type: 'PlainText',
 			text: output
@@ -28,18 +28,18 @@ function buildResponse(title, output, repromptText, shouldEndSession) {
 				type: 'PlainText',
 				text: repromptText
 			}
-		},
-		shouldEndSession
-	});
+        },
+        shouldEndSession: shouldEndSessionValue
+	};
 }
 
-/*function sendResponse(sessionAttributes, speechResponse){
+function sendResponse(sessionAttributes, speechResponse){
 	return {
 		version: '1.0',
 		sessionAttributes,
 		response: speechResponse
 	};
-}*/
+}
 
 function welcomeMessage(callback){
 	const sessionAttributes = {},
@@ -48,7 +48,7 @@ function welcomeMessage(callback){
 	repromptText = 'Welcome Test2',
     shouldEndSession = false;
     console.log('**Session 1** ' + shouldEndSession);
-    return Promise.resolve(callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession)));
+	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
 function getHelloWorld(intent, session, callback) {
@@ -58,7 +58,7 @@ function getHelloWorld(intent, session, callback) {
         repromptText = 'Hello World Again!',
         shouldEndSession = true;
     console.log('**Session 2** ' + shouldEndSession);
-    return Promise.resolve(callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession)));
+    callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
 function handleSessionEndRequest(callback){
@@ -66,7 +66,7 @@ function handleSessionEndRequest(callback){
 	speechOutput = 'Thank you. Try again',
     shouldEndSession = true;
     console.log('**Session 3** ' + shouldEndSession);
-    return Promise.resolve(callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession)));
+	callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
 function onSessionStarted(sessionStartedRequest, session) {
@@ -123,19 +123,21 @@ app.post('/', (req, res) => {
 	
     if (event.request.type === 'LaunchRequest') {
         console.log('Inside the launch request');
-        return Promise.resolve(onLaunch(event.request,event.session,
+        onLaunch(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
-            }));
+            });
     } else if (event.request.type === 'IntentRequest') {
         console.log('Inside the intent request');
-        return Promise.resolve(onIntent(event.request,event.session,
+        onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
-                callback(null, buildResponse(sessionAttributes, speechletResponse));
-            }));
+                console.log("Session Attr " + JSON.stringify(sessionAttributes) + "\n " + JSON.stringify(speechletResponse));
+                //callback(null, buildResponse(sessionAttributes, speechletResponse));
+            });
     } else if (event.request.type === 'SessionEndedRequest') {
         console.log("Inside session end");
         onSessionEnded(event.request, event.session);
         callback();
     }
+	
 });
