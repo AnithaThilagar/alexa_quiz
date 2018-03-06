@@ -75,7 +75,11 @@ alexaApp.startQuiz = function (response, used) {
 
 alexaApp.launch(function (request, response) {
     console.log('launch');
-    alexaApp.db.loadSession(request.userId).then((savedSession) => {
+	var say = [];
+	say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
+    response.say(say.join('\n'));
+	response.send();
+	/*alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
         var say = [];
         var used = [];
@@ -101,7 +105,7 @@ alexaApp.launch(function (request, response) {
         response.say(say.join('\n'));
         response.send();
     });
-    return false;  // wait for promise to resolve
+    return false;  // wait for promise to resolve*/
 });
 
 alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
