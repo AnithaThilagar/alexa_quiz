@@ -123,16 +123,16 @@ app.post('/', (req, res) => {
 	
     if (event.request.type === 'LaunchRequest') {
         console.log('Inside the launch request');
-        onLaunch(event.request,event.session,
+        return Promise.resolve(onLaunch(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
-            });
+            }));
     } else if (event.request.type === 'IntentRequest') {
         console.log('Inside the intent request');
-        onIntent(event.request,event.session,
+        return Promise.resolve(onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
-            });
+            }));
     } else if (event.request.type === 'SessionEndedRequest') {
         console.log("Inside session end");
         onSessionEnded(event.request, event.session);
