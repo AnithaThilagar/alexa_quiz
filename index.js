@@ -76,7 +76,7 @@ function onLaunch(launchRequest, session, callback) {
     console.log(`onLaunch requestId=${launchRequest.requestId}, sessionId=${session.sessionId}`);
 
     // Dispatch to your skill's launch.
-    getWelcomeResponse(callback);
+    welcomeMessage(callback);
 }
 
 function onIntent(req, session, callback){
@@ -87,9 +87,9 @@ function onIntent(req, session, callback){
 	
 	if(intentName === 'HelloWorld'){
 		console.log('Inside HelloWorld');
-		getWelcomeResponse(callback);
+        welcomeMessage(callback);
 	} else if (intentName === 'AMAZON.HelpIntent') {
-        getWelcomeResponse(callback);
+        welcomeMessage(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
         handleSessionEndRequest(callback);
     } else {
