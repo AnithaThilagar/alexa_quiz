@@ -23,8 +23,6 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "request": "^2.83.0",
-    "alexa-app-server": "^3.0.1",
-    "alexa-app": "4.2.1"
+    "request": "^2.83.0"
   }
 }

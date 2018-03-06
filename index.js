@@ -1,10 +1,7 @@
 'use strict';
 
 const express = require('express'),
-    bodyParser = require('body-parser'),
-    AlexaAppServer = require('alexa-app-server'),
-    alexa = require('alexa-app'),
-    alexaApp = new alexa.app('Node Saga');
+    bodyParser = require('body-parser');
 	
 var app = express();
 app.use(bodyParser.json());
@@ -50,7 +47,7 @@ function welcomeMessage(callback){
 	speechOutput = 'Welcome Test',
 	repromptText = 'Welcome Test2',
     shouldEndSession = false;
-    console.log('**Session** ' + shouldEndSession);
+    console.log('**Session 1** ' + shouldEndSession);
 	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
@@ -60,7 +57,7 @@ function getHelloWorld(intent, session, callback) {
         speechOutput = 'Welcome to Hello World.',
         repromptText = 'Hello World Again!',
         shouldEndSession = true;
-
+    console.log('**Session 2** ' + shouldEndSession);
     callback(sessionAttributes,
         buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
@@ -68,7 +65,8 @@ function getHelloWorld(intent, session, callback) {
 function handleSessionEndRequest(callback){
 	const cardTitle = 'Session Ended',
 	speechOutput = 'Thank you. Try again',
-	shouldEndSession = true;
+    shouldEndSession = true;
+    console.log('**Session 3** ' + shouldEndSession);
 	callback({}, buildResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
 
