@@ -13,7 +13,7 @@ const server = app.listen(process.env.PORT || 5000, () => {
 
 function buildResponse(title, output, repromptText, shouldEndSession) {
     console.log("--Session--" + shouldEndSession);
-	return {
+    return Promise.resolve({
 		outputSpeech: {
 			type: 'PlainText',
 			text: output
@@ -30,7 +30,7 @@ function buildResponse(title, output, repromptText, shouldEndSession) {
 			}
 		},
 		shouldEndSession
-	};
+	});
 }
 
 /*function sendResponse(sessionAttributes, speechResponse){
