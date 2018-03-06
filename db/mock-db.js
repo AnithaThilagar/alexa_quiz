@@ -7,6 +7,7 @@ module.exports = {
     loadSession: function(userId) {
         console.log('mock-db.loadSession '+userId);
         return new Promise(function(resolve) {
+			console.log(data.users[userId]);
             return resolve(data.users[userId]);
         });
     },

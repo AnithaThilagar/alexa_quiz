@@ -15,6 +15,7 @@ alexaApp.express({
 });
 
 alexaApp.error = function (e, req, res) {
+	console.log("Error in Alexa");
     console.log(e);
     throw e;
 };
