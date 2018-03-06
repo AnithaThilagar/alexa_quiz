@@ -14,12 +14,12 @@ alexaApp.express({
     checkCert: false
 });
 
-app.error = function (e, req, res) {
+alexaApp.error = function (e, req, res) {
     console.log(e);
     throw e;
 };
 
-app.card = function (current) {
+alexaApp.card = function (current) {
     console.log('createCard: current=', current);
     // current: {'3': 'A', '4': 'false'}
     var card = {
@@ -57,7 +57,7 @@ app.card = function (current) {
     return card;
 };
 
-app.startQuiz = function (response, used) {
+alexaApp.startQuiz = function (response, used) {
     var say = ['<s>First question:</s>'];
     // set current list of questions to empty
     response.session('current', '{}');
@@ -72,7 +72,7 @@ app.startQuiz = function (response, used) {
     return say;
 };
 
-app.launch(function (request, response) {
+alexaApp.launch(function (request, response) {
     console.log('launch');
     alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
@@ -96,58 +96,58 @@ app.launch(function (request, response) {
             say.push('<s>To hear a question again, say repeat.</s>');
             say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
         }
-        say = say.concat(app.startQuiz(response, used));
+        say = say.concat(alexaApp.startQuiz(response, used));
         response.say(say.join('\n'));
         response.send();
     });
     return false;  // wait for promise to resolve
 });
 
-app.intent('AMAZON.HelpIntent', function (request, response) {
+alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
     response.say('Say repeat <break strength="medium" /> to hear the question again, or stop <break strength="medium" /> to end.');
     response.shouldEndSession(false);
 });
 
-app.stopOrCancel = function (request, response) {
+alexaApp.stopOrCancel = function (request, response) {
     var current = JSON.parse(request.session('current') || '{}');
     var score = quiz.getScore(current);
     var say = ['Thanks for playing Quiz for America. '];
     if (Object.keys(current).length) {
         say.push('<s>You got ' + score + ' questions correct.</s>');
         say.push('<s>Check your Alexa app for detailed results.</s>');
-        response.card(app.card(current));
+        response.card(alexaApp.card(current));
     }
     say.push('<s>Remember to vote on November eighth.</s>');
     response.say(say.join('\n'));
 };
 
-app.intent('AMAZON.StopIntent', function (request, response) {
-    app.stopOrCancel(request, response);
+alexaApp.intent('AMAZON.StopIntent', function (request, response) {
+    alexaApp.stopOrCancel(request, response);
 });
 
-app.intent('AMAZON.CancelIntent', function (request, response) {
-    app.stopOrCancel(request, response);
+alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
+    alexaApp.stopOrCancel(request, response);
 });
 
-app.intent('CardIntent', function (request, response) {
-    response.card(app.card(JSON.parse(request.session('current') || '{}')));
+alexaApp.intent('CardIntent', function (request, response) {
+    response.card(alexaApp.card(JSON.parse(request.session('current') || '{}')));
     response.say('Your results have been sent to the Alexa app.');
 });
 
-app.intent('RepeatIntent', function (request, response) {
+alexaApp.intent('RepeatIntent', function (request, response) {
     var q = quiz.getQuestion(request.session('q'));
     response.shouldEndSession(false, 'What do you think? Is it ' + q.choices() + '?');
     response.say(q.questionAndAnswers());
 });
 
-app.intent('AnotherIntent', function (request, response) {
+alexaApp.intent('AnotherIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s>Ok. Let's start another quiz. <break strength=\"medium\" /></s>"];
-    say = say.concat(app.startQuiz(response, Object.keys(all)));
+    say = say.concat(alexaApp.startQuiz(response, Object.keys(all)));
     response.say(say.join('\n'));
 });
 
-app.intent('AnswerIntent',
+alexaApp.intent('AnswerIntent',
     {
         // A B C true false
         'slots': { 'ANSWER': 'ANSWERS' },
@@ -198,7 +198,7 @@ app.intent('AnswerIntent',
             say.push('<s>Check your Alexa app for detailed results.</s>');
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
             say.push("<s>Don't forget to vote on November eighth.</s>");
-            response.card(app.card(current));
+            response.card(alexaApp.card(current));
         } else {
             // get next question
             var next = quiz.getNextQuestion(Object.keys(all));
@@ -210,7 +210,7 @@ app.intent('AnswerIntent',
             } else {
                 say.push("That's all the questions I have for now. You got " + score +
                     " correct. Remember to vote on November eighth.");
-                response.card(app.card(current));
+                response.card(alexaApp.card(current));
             }
         }
         Object.keys(session).forEach((key) => {
@@ -228,11 +228,11 @@ app.intent('AnswerIntent',
 if (process.argv.length > 2) {
     var arg = process.argv[2];
     if (arg === '-s' || arg === '--schema') {
-        console.log(app.schema());
+        console.log(alexaApp.schema());
     }
     if (arg === '-u' || arg === '--utterances') {
-        console.log(app.utterances());
+        console.log(alexaApp.utterances());
     }
 }
 
-module.exports = app;
+module.exports = alexaApp;
