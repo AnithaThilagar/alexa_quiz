@@ -90,11 +90,14 @@ function onIntent(req, session, callback){
 	if(intentName === 'HelloWorld'){
 		console.log('Inside HelloWorld');
         welcomeMessage(callback);
-	} else if (intentName === 'AMAZON.HelpIntent') {
+    } else if (intentName === 'AMAZON.HelpIntent') {
+        console.log('Inside Help');
         welcomeMessage(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
+        console.log('Inside Stop');
         handleSessionEndRequest(callback);
     } else {
+        console.log('Inside Others');
         throw new Error('Invalid intent');
     }
 }
@@ -114,23 +117,25 @@ app.post('/', (req, res) => {
 	let event = req.body;
 	console.log(event);
 	
-	if(event.session.new){
+    if (event.session.new) {
+        console.log('Inside new session');
 		onSessionStarted({requestId: event.request.requestId}, event.session);
 	}
 	
-	if (event.request.type === 'LaunchRequest') {
+    if (event.request.type === 'LaunchRequest') {
+        console.log('Inside the launch request');
         onLaunch(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
-                console.log('Inside the launch request');
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'IntentRequest') {
+        console.log('Inside the intent request');
         onIntent(event.request,event.session,
             (sessionAttributes, speechletResponse) => {
-                console.log('Inside the intent request');
                 callback(null, buildResponse(sessionAttributes, speechletResponse));
             });
     } else if (event.request.type === 'SessionEndedRequest') {
+        console.log("Inside session end");
         onSessionEnded(event.request, event.session);
         callback();
     }
