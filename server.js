@@ -83,8 +83,8 @@ alexaApp.launch(function (request, response) {
         var session = savedSession || {};
         console.log('session=', session);
         if (session) {
-            var all = JSON.parse(session.all || '{}');
-            used = Object.keys(all);
+            //var all = JSON.parse(session.all || '{}');
+            used = Object.keys(session.all);
             Object.keys(session).forEach((key) => {
                 response.session(key, savedSession[key]);
             });
