@@ -14,7 +14,8 @@ const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
 
-function buildResponse(title, output, repromptText, shouldEndSession){
+function buildResponse(title, output, repromptText, shouldEndSession) {
+    console.log("--Session--" + shouldEndSession);
 	return {
 		outputSpeech: {
 			type: 'PlainText',
@@ -48,7 +49,8 @@ function welcomeMessage(callback){
 	cardTitle = 'Welcome',
 	speechOutput = 'Welcome Test',
 	repromptText = 'Welcome Test2',
-	shouldEndSession = false;
+    shouldEndSession = false;
+    console.log('**Session** ' + shouldEndSession);
 	callback(sessionAttributes, buildResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
 
