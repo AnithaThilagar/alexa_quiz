@@ -166,6 +166,7 @@ alexaApp.intent('AnswerIntent',
     },
 
     function (request, response) {
+		console.log('Inside answer intent');
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
         var all = JSON.parse(request.session('all') || '{}');
@@ -179,6 +180,7 @@ alexaApp.intent('AnswerIntent',
         // found question in session; check answer
         if (q) {
             var answer = request.slot('ANSWER') || 'X';
+			console.log('Inside ans '+answer);
             answer = answer.slice(0, 1).toUpperCase();
             if (q.validAnswers().indexOf(answer) < 0) {
                 answer = 'X';
