@@ -72,6 +72,7 @@ alexaApp.startQuiz = function (response, used) {
     } else {
         say.push("That's all the questions I have for now.  Remember to vote on November eighth.");
     }
+	console.log(say);
     return say;
 };
 
@@ -106,6 +107,7 @@ alexaApp.launch(function (request, response) {
         }
 		console.log('Line 2');
         say = say.concat(alexaApp.startQuiz(response, used));
+		console.log("Say "+say);
         response.say(say.join('\n'));
         response.send();
     });
