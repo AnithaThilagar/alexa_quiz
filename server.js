@@ -143,7 +143,7 @@ alexaApp.intent('RepeatIntent', function (request, response) {
 alexaApp.intent('AnotherIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s>Ok. Let's start another quiz. <break strength=\"medium\" /></s>"];
-    say = say.concat(alexaApp.startQuiz(response, Object.keys(all)));
+    say = say.concat(app.startQuiz(response, Object.keys(all)));
     response.say(say.join('\n'));
 });
 
@@ -235,4 +235,4 @@ if (process.argv.length > 2) {
     }
 }
 
-module.exports = alexaApp;
+module.exports = app;
