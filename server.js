@@ -106,7 +106,7 @@ alexaApp.launch(function (request, response) {
             say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
         }
 		console.log('Line 2');
-        say = say.concat(alexaApp.startQuiz(response, used));
+        //say = say.concat(alexaApp.startQuiz(response, used));
         response.say(say.join('\n'));
         response.send();
     });
