@@ -23,7 +23,7 @@ alexaApp.intent("HelloWorld", {
     res.say("You said Hello World!!");
 });
 
-app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
     console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
 
