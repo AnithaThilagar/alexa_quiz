@@ -5,7 +5,8 @@ const express = require('express'),
     alexa = require('alexa-app'),
     app = express(),
     alexaApp = new alexa.app("NodeSaga"),
-    quiz = require('./quiz');
+    quiz = require('./quiz'),
+	Promise = require('bluebird');
 
 alexaApp.db = require('./db/mock-db');
 
