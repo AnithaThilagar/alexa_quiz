@@ -166,6 +166,7 @@ alexaApp.intent('AnswerIntent',
     },
 
     function (request, response) {
+		return Promise.resolve(
 		console.log('Inside answer intent');
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
@@ -230,7 +231,7 @@ alexaApp.intent('AnswerIntent',
         Object.keys(session).forEach((key) => {
             response.session(key, session[key]);
         });
-        return Promise.resolve(alexaApp.db.saveSession(request.userId, session).then(() => {
+        alexaApp.db.saveSession(request.userId, session).then(() => {
             response.say(say.join('\n'));
             response.send();
         }));
