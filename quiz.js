@@ -125,10 +125,12 @@ quiz.getScore = function (responses) {
     console.log('Get score');
     // responses = {questionId: response, ... }
     if (!responses) {
+        console.log('No resp');
         return 0;
     }
     var correct = 0;
     Object.keys(responses).forEach((questionId) => {
+        console.log("Check " + questionId);
         if (!questions[questionId]) {
             return;
         }

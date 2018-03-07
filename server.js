@@ -166,7 +166,8 @@ alexaApp.intent('AnswerIntent',
     },
 
     function (request, response) {
-		console.log('Inside answer intent');
+        console.log('Inside answer intent');
+        console.log(request);
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
         //var all = JSON.parse(request.session('all') || '{}');
@@ -180,7 +181,8 @@ alexaApp.intent('AnswerIntent',
         var q = currentQuestionId ? quiz.getQuestion(currentQuestionId) : null;
         //var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
         var score = quiz.getScore((request.session('current') || {}));
-		// found question in session; check answer
+        // found question in session; check answer
+        console.log("score "+score);
         if (q) {
             var answer = request.slot('ANSWER') || 'X';
 			console.log('Inside ans '+answer);
