@@ -99,7 +99,8 @@ Question.prototype = {
         return this.sayLetter(this.q.answer)+', '+answer+'. ';
     },
 
-    explanation: function() {
+    explanation: function () {
+        console.log("Expln");
         return this.q.explanation;
     },
 
