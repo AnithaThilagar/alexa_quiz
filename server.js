@@ -262,7 +262,7 @@ alexaApp.intent('AnswerIntent',
                 answer = 'X';
             }
             console.log('answer normalized=' + answer);
-            app.db.logAnswer(currentQuestionId, answer);
+            alexaApp.db.logAnswer(currentQuestionId, answer);
             var sayAnswer = q.answer(answer);
             if (q.isCorrect(answer)) {
                 say.push("<s>That's correct!</s>");
@@ -287,7 +287,7 @@ alexaApp.intent('AnswerIntent',
             say.push('<s>Check your Alexa app for detailed results.</s>');
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
             say.push("<s>Don't forget to vote on November eighth.</s>");
-            response.card(app.card(current));
+            response.card(alexaApp.card(current));
         } else {
             // get next question
             var next = quiz.getNextQuestion(Object.keys(all));
@@ -299,13 +299,13 @@ alexaApp.intent('AnswerIntent',
             } else {
                 say.push("That's all the questions I have for now. You got " + score +
                     " correct. Remember to vote on November eighth.");
-                response.card(app.card(current));
+                response.card(alexaApp.card(current));
             }
         }
         Object.keys(session).forEach((key) => {
             response.session(key, session[key]);
         });
-        app.db.saveSession(request.userId, session).then(() => {
+        alexaApp.db.saveSession(request.userId, session).then(() => {
             response.say(say.join('\n'));
             response.send();
         });
