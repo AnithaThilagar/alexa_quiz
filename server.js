@@ -156,8 +156,6 @@ alexaApp.intent('AnotherIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
-alexaApp.slot();
-
 alexaApp.intent('AnswerIntent',
     {
         // A B C true false
