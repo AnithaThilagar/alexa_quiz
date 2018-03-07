@@ -203,8 +203,8 @@ alexaApp.intent('AnswerIntent',
             }
             say.push(q.explanation());
             // save question and answer to current and all questions
+            console.log(" Type " + typeof currentQuestionId + " -- " + typeof current);
             current[currentQuestionId] = answer;
-            current[10] = answer;
             all[currentQuestionId] = answer;
         }
         session.current = JSON.stringify(current);
