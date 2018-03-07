@@ -20,6 +20,7 @@ Question.prototype = {
     },
 
     answer: function(a) {
+		console.log("Inside answer");
         var key = a || '';
         if (this.isBoolean()) {
             if (a.startsWith('T')) {
@@ -73,6 +74,7 @@ Question.prototype = {
     },
 
     isCorrect: function(answer) {
+		console.log("Inside is correct");
         var correct = this.q.answer;
         return this.q.answer.toUpperCase().slice(0, 1) === answer.toUpperCase().slice(0, 1);
     },
