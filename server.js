@@ -156,6 +156,8 @@ alexaApp.intent('AnotherIntent', function (request, response) {
     response.say(say.join('\n'));
 });
 
+alexaApp.slot();
+
 alexaApp.intent('AnswerIntent',
     {
         // A B C true false
@@ -169,15 +171,18 @@ alexaApp.intent('AnswerIntent',
 		console.log('Inside answer intent');
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
-        var all = JSON.parse(request.session('all') || '{}');
-        var current = JSON.parse(request.session('current') || '{}');
-        var used = Object.keys(all);
+        //var all = JSON.parse(request.session('all') || '{}');
+        var all = (request.session('all') || {});
+		//var current = JSON.parse(request.session('current') || '{}');
+        var current = (request.session('current') || {});
+		var used = Object.keys(all);
         var currentQuestionId = request.session('q');
         console.log('answer question=' + currentQuestionId + ' session=', session);
         var say = [];
         var q = currentQuestionId ? quiz.getQuestion(currentQuestionId) : null;
-        var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
-        // found question in session; check answer
+        //var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
+        var score = quiz.getScore((request.session('current') || {}));
+		// found question in session; check answer
         if (q) {
             var answer = request.slot('ANSWER') || 'X';
 			console.log('Inside ans '+answer);
