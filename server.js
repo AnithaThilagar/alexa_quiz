@@ -97,7 +97,7 @@ alexaApp.launch(function (request, response) {
             });
         }
 		console.log('Line 1');
-        say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
+        say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
         if (!savedSession) {
             say.push('<s>Each quiz has ten questions.</s>');
             say.push("<s>I'll ask a multiple choice or true false question.</s>");
@@ -189,7 +189,7 @@ alexaApp.intent('AnswerIntent',
                 answer = 'X';
             }
             console.log('answer normalized=' + answer);
-            return Promise.resolve(alexaApp.db.logAnswer(currentQuestionId, answer);
+            alexaApp.db.logAnswer(currentQuestionId, answer);
             var sayAnswer = q.answer(answer);
             if (q.isCorrect(answer)) {
                 say.push("<s>That's correct!</s>");
@@ -233,7 +233,7 @@ alexaApp.intent('AnswerIntent',
         alexaApp.db.saveSession(request.userId, session).then(() => {
             response.say(say.join('\n'));
             response.send();
-        }));
+        });
         //return false;
     }
 );

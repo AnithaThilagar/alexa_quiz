@@ -10,7 +10,8 @@ function Question(id) {
 }
 
 Question.prototype = {
-    isBoolean: function() {
+    isBoolean: function () {
+        console.log("Inside boolean check");
         var a = this.q.answer.toUpperCase();
         return (a === 'TRUE' || a === 'FALSE');
     },
@@ -39,11 +40,13 @@ Question.prototype = {
         return '<say-as interpret-as="characters">' + letter +'</say-as> <break strength="medium" /> ';
     },
 
-    validAnswers: function() {
+    validAnswers: function () {
+        console.log('Inside valid ans');
         return this.isBoolean() ? ['T', 'F'] : ['A', 'B', 'C'];
     },
 
-    answers: function() {
+    answers: function () {
+        console.log('Inside answers**');
         var say = [];
         if (this.isBoolean()) {
             return null;
@@ -56,7 +59,8 @@ Question.prototype = {
         return say.join(' ');
     },
 
-    questionAndAnswers: function() {
+    questionAndAnswers: function () {
+        console.log('Q & A');
         var say = [this.sayQuestion()];
         var answers = this.answers();
         if (answers) {
@@ -66,7 +70,8 @@ Question.prototype = {
         return say.join('\n');
     },
 
-    choices: function() {
+    choices: function () {
+        console.log('Choice');
         if (this.isBoolean()) {
             return 'true or false';
         }
@@ -79,7 +84,8 @@ Question.prototype = {
         return this.q.answer.toUpperCase().slice(0, 1) === answer.toUpperCase().slice(0, 1);
     },
 
-    answerText: function() {
+    answerText: function () {
+        console.log('Ans Txt');
         if (this.isBoolean()) {
             return this.q.answer;
         }
@@ -114,7 +120,8 @@ quiz.getQuestion = function(id) {
     return id ? new Question(id) : null;
 };
 
-quiz.getScore = function(responses) {
+quiz.getScore = function (responses) {
+    console.log('Get score');
     // responses = {questionId: response, ... }
     if (!responses) {
         return 0;
