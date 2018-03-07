@@ -52,8 +52,6 @@ alexaApp.card = function (current) {
         }
         content += '\n';
     });
-    content += '\nContent created by volunteers with DevProgress\n';
-    content += 'http://devprogress.us\n';
     card.content = content;
     return card;
 };
@@ -196,7 +194,7 @@ alexaApp.intent('AnswerIntent',
         console.log('questions=', numQuestions);
         if (numQuestions === 10) {
             say.push("<s>Congratulations! You've answered ten questions.</s>");
-            say.push('<s>Check your Alexa app for detailed results.</s>');
+            say.push('<s>You got ' + score + ' questions correct.</s>');
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
             response.card(alexaApp.card(current));
         } else {
