@@ -27,7 +27,7 @@
   "4": {
     "question": "Which statement execute the code of sample.js file?",
     "answers": {
-      "A": "nodejs sample.js",
+      "A": "node JS sample.js",
       "B": "node sample.js",
       "C": "sample.js"
     },
@@ -37,12 +37,12 @@
   "5": {
     "question": "Which of the following module is required for operating system specific operations?",
     "answers": {
-      "A": "os module",
-      "B": "fs module",
+      "A": "OS module",
+      "B": "FS module",
       "C": "None of the above"
     },
     "answer": "A",
-    "explanation": "Node.js os module provides a few basic operating-system related utility functions"
+    "explanation": "Node JS os module provides a few basic operating-system related utility functions"
   },
   "6": {
     "question": "All APIs of Node JS are",
@@ -52,7 +52,7 @@
       "C": "Both"
     },
     "answer": "A",
-    "explanation": "All APIs of Node.js library are aynchronous that is non-blocking"
+    "explanation": "All APIs of Node JS library are aynchronous that is non-blocking"
   },
   "7": {
     "question": "REPL stands for",
@@ -72,7 +72,7 @@
       "C": "http module"
     },
     "answer": "C",
-    "explanation": "Node.js provides http module which can be used to create HTTP client of server"
+    "explanation": "Node JS provides http module which can be used to create HTTP client of server"
   },
   "9": {
     "question": "What is Node JS?",
@@ -82,7 +82,7 @@
       "C": "Node JS is a java based framework"
     },
     "answer": "B",
-    "explanation": "Node.js provides http module which can be used to create HTTP client of server"
+    "explanation": "Node JS provides http module which can be used to create HTTP client of server"
   },
   "10": {
     "question": "True or false: Package.json is present in the root directory of any Node application/module",
@@ -110,7 +110,7 @@
     "explanation": "Gulp is a toolkit that helps you automate painful or time-consuming tasks in your development workflow"
   },
   "13": {
-    "question": "Node.js runs on?",
+    "question": "Node JS runs on?",
     "answers": {
       "A": "Client",
       "B": "Server",
