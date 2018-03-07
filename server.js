@@ -172,8 +172,8 @@ alexaApp.intent('AnswerIntent',
         // {'1': 'A', '2': 'false'}
         //var all = JSON.parse(request.session('all') || '{}');
         var all = (request.session('all') || {});
-		//var current = JSON.parse(request.session('current') || '{}');
-        var current = (request.session('current') || '{}');
+		var current = JSON.parse(request.session('current') || '{}');
+        //var current = (request.session('current') || {});
 		var used = Object.keys(all);
         var currentQuestionId = request.session('q');
         console.log('answer question=' + currentQuestionId + ' session=', session);
@@ -204,6 +204,7 @@ alexaApp.intent('AnswerIntent',
             say.push(q.explanation());
             // save question and answer to current and all questions
             current[currentQuestionId] = answer;
+            current[10] = answer;
             all[currentQuestionId] = answer;
         }
         session.current = JSON.stringify(current);
