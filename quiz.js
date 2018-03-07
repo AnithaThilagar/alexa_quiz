@@ -36,7 +36,8 @@ Question.prototype = {
         return this.q.answers ? this.q.answers[key] || '' : this.q.answer;
     },
 
-    sayLetter: function(letter) {
+    sayLetter: function (letter) {
+        console.log("Inside say letter " + letter);
         return '<say-as interpret-as="characters">' + letter +'</say-as> <break strength="medium" /> ';
     },
 
@@ -91,6 +92,7 @@ Question.prototype = {
             return this.q.answer;
         }
         var answer = this.q.answers[this.q.answer];
+        console.log("Ans Text = ans " + answer);
         if (!answer) {
             return '';
         }
