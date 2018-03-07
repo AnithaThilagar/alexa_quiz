@@ -191,6 +191,7 @@ alexaApp.intent('AnswerIntent',
             console.log('answer normalized=' + answer);
             alexaApp.db.logAnswer(currentQuestionId, answer);
             var sayAnswer = q.answer(answer);
+            console.log("Ans---" + q.isCorrect(answer));
             if (q.isCorrect(answer)) {
                 say.push("<s>That's correct!</s>");
                 score += 1;

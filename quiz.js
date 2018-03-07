@@ -81,6 +81,7 @@ Question.prototype = {
     isCorrect: function(answer) {
 		console.log("Inside is correct");
         var correct = this.q.answer;
+        console.log('Correct ' + correct);
         return this.q.answer.toUpperCase().slice(0, 1) === answer.toUpperCase().slice(0, 1);
     },
 
