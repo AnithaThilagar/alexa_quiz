@@ -70,7 +70,7 @@ alexaApp.startQuiz = function (response, used) {
         response.session('q', q.id);
         response.shouldEndSession(false, 'What do you think? Is it ' + q.choices() + '?');
     } else {
-        say.push("That's all the questions I have for now.  Remember to vote on November eighth.");
+        say.push("That's all the questions I have for now.");
     }
 	console.log(say);
     return say;
@@ -90,8 +90,8 @@ alexaApp.launch(function (request, response) {
         var session = savedSession || {};
         console.log('session=', session);
         if (session) {
-            //var all = JSON.parse(session.all || '{}');
-            used = Object.keys(session.all);
+            var all = typeof session.all == 'string' ? JSON.parse(session.all || '{}') : (session.all || {});
+            used = Object.keys(all);
             Object.keys(session).forEach((key) => {
                 response.session(key, savedSession[key]);
             });
@@ -109,7 +109,6 @@ alexaApp.launch(function (request, response) {
         response.say(say.join('\n'));
         response.send();
     }));
-    //return false;  // wait for promise to resolve
 });
 
 alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
@@ -126,7 +125,6 @@ alexaApp.stopOrCancel = function (request, response) {
         say.push('<s>Check your Alexa app for detailed results.</s>');
         response.card(alexaApp.card(current));
     }
-    say.push('<s>Remember to vote on November eighth.</s>');
     response.say(say.join('\n'));
 };
 
@@ -167,84 +165,7 @@ alexaApp.intent('AnswerIntent',
 
     function (request, response) {
         console.log('Inside answer intent');
-        /*console.log(request);
         var session = request.sessionDetails.attributes;
-        // {'1': 'A', '2': 'false'}
-        //var all = JSON.parse(request.session('all') || '{}');
-        var all = (request.session('all') || {});
-		var current = JSON.parse(request.session('current') || '{}');
-        //var current = (request.session('current') || {});
-		var used = Object.keys(all);
-        var currentQuestionId = request.session('q');
-        console.log('answer question=' + currentQuestionId + ' session=', session);
-        var say = [];
-        var q = currentQuestionId ? quiz.getQuestion(currentQuestionId) : null;
-        var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
-        //var score = quiz.getScore((request.session('current') || {}));
-        // found question in session; check answer
-        console.log("score "+score);
-        if (q) {
-            var answer = request.slot('ANSWER') || 'X';
-			console.log('Inside ans '+answer);
-            answer = answer.slice(0, 1).toUpperCase();
-            if (q.validAnswers().indexOf(answer) < 0) {
-                answer = 'X';
-            }
-            console.log('answer normalized=' + answer);
-            alexaApp.db.logAnswer(currentQuestionId, answer);
-            var sayAnswer = q.answer(answer);
-            console.log("Ans---" + q.isCorrect(answer));
-            if (q.isCorrect(answer)) {
-                say.push("<s>That's correct!</s>");
-                score += 1;
-            } else {
-                say.push('<s>The correct answer is ' + q.answerText() + '.</s>');
-                console.log(say);
-            }
-            say.push(q.explanation());
-            // save question and answer to current and all questions
-            console.log(" Type " + typeof currentQuestionId + " -- " + typeof current);
-            //current[currentQuestionId] = answer;
-            current[10] = answer;
-            //all[currentQuestionId] = answer;
-            all[10] = answer;
-        }
-        session.current = JSON.stringify(current);
-        session.all = JSON.stringify(all);
-        // if 10 questions, stop and send results
-        var numQuestions = Object.keys(current).length;
-        console.log('questions=', numQuestions);
-        if (numQuestions === 10) {
-            say.push("<s>Congratulations! You've answered ten questions.</s>");
-            say.push('<s>Check your Alexa app for detailed results.</s>');
-            say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
-            //say.push("<s>Don't forget to vote on November eighth.</s>");
-            response.card(alexaApp.card(current));
-        } else {
-            // get next question
-            var next = quiz.getNextQuestion(Object.keys(all));
-            if (next) {
-                say.push('<s>Question ' + (numQuestions + 1) + '. <break strength="x-strong" /></s>');
-                say.push(next.questionAndAnswers());
-                session.q = next.id;
-                response.shouldEndSession(false, 'What do you think? Is it ' + next.choices() + '?');
-            } else {
-                say.push("That's all the questions I have for now. You got " + score +
-                    " correct. Remember to vote on November eighth.");
-                response.card(alexaApp.card(current));
-            }
-        }
-        Object.keys(session).forEach((key) => {
-            response.session(key, session[key]);
-        });
-        alexaApp.db.saveSession(request.userId, session).then(() => {
-            response.say(say.join('\n'));
-            response.send();
-        });
-        //return false;*/
-
-        var session = request.sessionDetails.attributes;
-        // {'1': 'A', '2': 'false'}
         var all = typeof request.session('all') == 'string' ? JSON.parse(request.session('all') || '{}') : (request.session('all') || {});
         console.log("Before current");
         var current = typeof request.session('current') == 'string' ? JSON.parse(request.session('current') || '{}') : (request.session('current') || {});
@@ -286,7 +207,6 @@ alexaApp.intent('AnswerIntent',
             say.push("<s>Congratulations! You've answered ten questions.</s>");
             say.push('<s>Check your Alexa app for detailed results.</s>');
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
-            say.push("<s>Don't forget to vote on November eighth.</s>");
             response.card(alexaApp.card(current));
         } else {
             console.log("Inside NQ");
