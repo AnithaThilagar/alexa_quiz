@@ -179,8 +179,8 @@ alexaApp.intent('AnswerIntent',
         console.log('answer question=' + currentQuestionId + ' session=', session);
         var say = [];
         var q = currentQuestionId ? quiz.getQuestion(currentQuestionId) : null;
-        //var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
-        var score = quiz.getScore((request.session('current') || {}));
+        var score = quiz.getScore(JSON.parse(request.session('current') || '{}'));
+        //var score = quiz.getScore((request.session('current') || {}));
         // found question in session; check answer
         console.log("score "+score);
         if (q) {
