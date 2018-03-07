@@ -245,12 +245,9 @@ alexaApp.intent('AnswerIntent',
 
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
-        var all = request.session('all') || '{}';
-        if (typeof all == 'string') {
-            all = JSON.parse(all);
-        }
+        var all = typeof request.session('all') == 'string' ? JSON.parse(request.session('all') || '{}') : (request.session('all') || {});
         console.log("Before current");
-        var current = JSON.parse(request.session('current') || '{}');
+        var current = typeof request.session('current') == 'string' ? JSON.parse(request.session('current') || '{}') : (request.session('current') || {});
         var used = Object.keys(all);
         var currentQuestionId = request.session('q');
         console.log('answer question=' + currentQuestionId + ' session=', session);
