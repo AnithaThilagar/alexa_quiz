@@ -166,7 +166,6 @@ alexaApp.intent('AnswerIntent',
     },
 
     function (request, response) {
-		return Promise.resolve(
 		console.log('Inside answer intent');
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
@@ -190,7 +189,7 @@ alexaApp.intent('AnswerIntent',
                 answer = 'X';
             }
             console.log('answer normalized=' + answer);
-            alexaApp.db.logAnswer(currentQuestionId, answer);
+            return Promise.resolve(alexaApp.db.logAnswer(currentQuestionId, answer);
             var sayAnswer = q.answer(answer);
             if (q.isCorrect(answer)) {
                 say.push("<s>That's correct!</s>");
