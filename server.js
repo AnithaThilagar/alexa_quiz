@@ -245,7 +245,10 @@ alexaApp.intent('AnswerIntent',
 
         var session = request.sessionDetails.attributes;
         // {'1': 'A', '2': 'false'}
-        var all = JSON.parse(request.session('all') || '{}');
+        var all = request.session('all') || '{}';
+        if (typeof all == 'string') {
+            all = JSON.parse(all);
+        }
         console.log("Before current");
         var current = JSON.parse(request.session('current') || '{}');
         var used = Object.keys(all);
