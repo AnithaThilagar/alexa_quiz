@@ -117,7 +117,6 @@ alexaApp.stopOrCancel = function (request, response) {
     var say = ['Thanks for playing Quiz for America. '];
     if (Object.keys(current).length) {
         say.push('<s>You got ' + score + ' questions correct.</s>');
-        say.push('<s>Check your Alexa app for detailed results.</s>');
         response.card(alexaApp.card(current));
     }
     response.say(say.join('\n'));

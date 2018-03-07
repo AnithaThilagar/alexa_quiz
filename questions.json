@@ -45,7 +45,7 @@
     "explanation": "Node.js os module provides a few basic operating-system related utility functions"
   },
   "6": {
-    "question": "All APIs of Node.JS are",
+    "question": "All APIs of Node JS are",
     "answers": {
       "A": "Asynchronous",
       "B": "Synchronous",
@@ -75,7 +75,7 @@
     "explanation": "Node.js provides http module which can be used to create HTTP client of server"
   },
   "9": {
-    "question": "What is Node.JS?",
+    "question": "What is Node JS?",
     "answers": {
       "A": "Node JS is a web server",
       "B": "Node JS is a Javascript based framework/platform build on Google Chrome's Javascript V8 Engine",
@@ -117,6 +117,6 @@
       "C": "Both"
     },
     "answer": "B",
-    "explanation": "Node.js is a server-based Javascript"
+    "explanation": "Node JS is a server-based Javascript"
   }
 }
