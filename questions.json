@@ -7,8 +7,7 @@
       "C": "Node Project Manager"
     },
     "answer": "A",
-    "explanation": "npm stands for Node Package Manager",
-    "source": ""
+    "explanation": "npm stands for Node Package Manager"
   },
   "2": {
     "question": "Which of the following provides in-built events",
@@ -18,10 +17,14 @@
       "C": "events"
     },
     "answer": "C",
-    "explanation": "Node has multiple in-built events available through events module",
-    "source": ""
+    "explanation": "Node has multiple in-built events available through events module"
   },
   "3": {
+    "question": "True or false: Transform stream is not a type of duplex stream",
+    "answer": "FALSE",
+    "explanation": "Transform stream is a duplex stream where the output is computed based on input"
+  },
+  "4": {
     "question": "Which statement execute the code of sample.js file?",
     "answers": {
       "A": "nodejs sample.js",
@@ -29,30 +32,91 @@
       "C": "sample.js"
     },
     "answer": "B",
-    "explanation": "To execute the file use node followed by the file name",
-    "source": ""
-  },
-
-  "4": {
-    "question": "How will a 3-month moratorium on federal student loan payments help borrowers?",
-    "answers": {
-      "A": "It won't be helpful at all.",
-      "B": "Neither",
-      "C": "It will allow more time for borrowers to refinance their loans to save money."
-    },
-    "answer": "C",
-    "explanation": "As president, Hillary will take executive action to give borrowers a 3-month moratorium on their federal student loan payments. During that time, the Department of Education will help borrowers refinance their loans to save money, whether by enrolling in an income-based repayment plan, consolidating their loans, or taking advantage of reduced monthly interest payments and fees.",
-    "source": ""
+    "explanation": "To execute the file use node followed by the file name"
   },
   "5": {
-    "question": "What life milestones for young people are being held up because of mounting student debt?",
+    "question": "Which of the following module is required for operating system specific operations?",
     "answers": {
-      "A": "Getting married",
-      "B": "Buying homes",
+      "A": "os module",
+      "B": "fs module",
+      "C": "None of the above"
+    },
+    "answer": "A",
+    "explanation": "Node.js os module provides a few basic operating-system related utility functions"
+  },
+  "6": {
+    "question": "All APIs of Node.JS are",
+    "answers": {
+      "A": "Asynchronous",
+      "B": "Synchronous",
       "C": "Both"
     },
+    "answer": "A",
+    "explanation": "All APIs of Node.js library are aynchronous that is non-blocking"
+  },
+  "7": {
+    "question": "REPL stands for",
+    "answers": {
+      "A": "Read Eval Point Loop",
+      "B": "Read Earn Point Learn",
+      "C": "Read Eval Print Loop"
+    },
     "answer": "C",
-    "explanation": "According to a 2013 study by the think tank Demos, college-educated households with student debt stand to lose $208,000 over a lifetime, mostly from a lack of retirement savings.  Education should hold the key to a brighter future-not a lifetime of debilitating debt.",
-    "source": ""
+    "explanation": "REPL stands for Read Eval Print Loop, and it represents a computer environment like a window console or Unix/Linux shell where a command is entered and system responds with an output in interactive mode"
+  },
+  "8": {
+    "question": "Which of the following module is required to create a web server?",
+    "answers": {
+      "A": "Web module",
+      "B": "Net module",
+      "C": "http module"
+    },
+    "answer": "C",
+    "explanation": "Node.js provides http module which can be used to create HTTP client of server"
+  },
+  "9": {
+    "question": "What is Node.JS?",
+    "answers": {
+      "A": "Node JS is a web server",
+      "B": "Node JS is a Javascript based framework/platform build on Google Chrome's Javascript V8 Engine",
+      "C": "Node JS is a java based framework"
+    },
+    "answer": "B",
+    "explanation": "Node.js provides http module which can be used to create HTTP client of server"
+  },
+  "10": {
+    "question": "True or false: Package.json is present in the root directory of any Node application/module",
+    "answer": "TRUE",
+    "explanation": "package.json is used to define the properties of a package. It can also be used to update dependencies of a Node application"
+  },
+  "11": {
+    "question": "What is the maximum time span for setTimeout(a,b)?",
+    "answers": {
+      "A": "24.8 days",
+      "B": "18 hours",
+      "C": "All of the above"
+    },
+    "answer": "A",
+    "explanation": "The setTimeout(a,b) global function is used to run callback A after atleast B milliseconds. It cannot span more than 24.8 days"
+  },
+  "12": {
+    "question": "What is Gulp?",
+    "answers": {
+      "A": "Gulp is a task runner which uses Node JS to automate & enhance the workflow",
+      "B": "Gulp is a web framework for exposing the REST API's",
+      "C": "All of the above"
+    },
+    "answer": "A",
+    "explanation": "Gulp is a toolkit that helps you automate painful or time-consuming tasks in your development workflow"
+  },
+  "13": {
+    "question": "Node.js runs on?",
+    "answers": {
+      "A": "Client",
+      "B": "Server",
+      "C": "Both"
+    },
+    "answer": "B",
+    "explanation": "Node.js is a server-based Javascript"
   }
 }

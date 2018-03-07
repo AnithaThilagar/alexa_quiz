@@ -78,10 +78,6 @@ alexaApp.startQuiz = function (response, used) {
 
 alexaApp.launch(function (request, response) {
     console.log('launch');
-	/*var say = [];
-	say.push('<s>Welcome to Quiz for America. <break strength="medium" /></s>');
-    response.say(say.join('\n'));
-	response.send();*/
 	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
         var say = [];
@@ -96,8 +92,7 @@ alexaApp.launch(function (request, response) {
                 response.session(key, savedSession[key]);
             });
         }
-		console.log('Line 1');
-        say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
+		say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
         if (!savedSession) {
             say.push('<s>Each quiz has ten questions.</s>');
             say.push("<s>I'll ask a multiple choice or true false question.</s>");
@@ -150,7 +145,7 @@ alexaApp.intent('RepeatIntent', function (request, response) {
 alexaApp.intent('AnotherIntent', function (request, response) {
     var all = JSON.parse(request.session('all') || '{}');
     var say = ["<s>Ok. Let's start another quiz. <break strength=\"medium\" /></s>"];
-    say = say.concat(app.startQuiz(response, Object.keys(all)));
+    say = say.concat(alexaApp.startQuiz(response, Object.keys(all)));
     response.say(say.join('\n'));
 });
 
@@ -167,7 +162,6 @@ alexaApp.intent('AnswerIntent',
         console.log('Inside answer intent');
         var session = request.sessionDetails.attributes;
         var all = typeof request.session('all') == 'string' ? JSON.parse(request.session('all') || '{}') : (request.session('all') || {});
-        console.log("Before current");
         var current = typeof request.session('current') == 'string' ? JSON.parse(request.session('current') || '{}') : (request.session('current') || {});
         var used = Object.keys(all);
         var currentQuestionId = request.session('q');
@@ -193,10 +187,8 @@ alexaApp.intent('AnswerIntent',
             }
             say.push(q.explanation());
             // save question and answer to current and all questions
-            console.log("Before set values");
             current[currentQuestionId] = answer;
             all[currentQuestionId] = answer;
-            console.log("After set values");
         }
         session.current = JSON.stringify(current);
         session.all = JSON.stringify(all);
@@ -209,24 +201,20 @@ alexaApp.intent('AnswerIntent',
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
             response.card(alexaApp.card(current));
         } else {
-            console.log("Inside NQ");
             // get next question
             var next = quiz.getNextQuestion(Object.keys(all));
             if (next) {
-                console.log('-----Next--');
                 say.push('<s>Question ' + (numQuestions + 1) + '. <break strength="x-strong" /></s>');
                 say.push(next.questionAndAnswers());
                 session.q = next.id;
                 response.shouldEndSession(false, 'What do you think? Is it ' + next.choices() + '?');
             } else {
-                console.log('--- Else ----');
                 say.push("That's all the questions I have for now. You got " + score +
                     " correct.");
                 response.card(alexaApp.card(current));
             }
         }
         Object.keys(session).forEach((key) => {
-            console.log('Test Line');
             response.session(key, session[key]);
         });
         return Promise.resolve(alexaApp.db.saveSession(request.userId, session).then(() => {

@@ -11,7 +11,6 @@ function Question(id) {
 
 Question.prototype = {
     isBoolean: function () {
-        console.log("Inside boolean check");
         var a = this.q.answer.toUpperCase();
         return (a === 'TRUE' || a === 'FALSE');
     },
@@ -21,8 +20,7 @@ Question.prototype = {
     },
 
     answer: function(a) {
-		console.log("Inside answer");
-        var key = a || '';
+		var key = a || '';
         if (this.isBoolean()) {
             if (a.startsWith('T')) {
                 key = 'TRUE';
@@ -37,17 +35,14 @@ Question.prototype = {
     },
 
     sayLetter: function (letter) {
-        console.log("Inside say letter " + letter);
         return '<say-as interpret-as="characters">' + letter +'</say-as> <break strength="medium" /> ';
     },
 
     validAnswers: function () {
-        console.log('Inside valid ans');
         return this.isBoolean() ? ['T', 'F'] : ['A', 'B', 'C'];
     },
 
     answers: function () {
-        console.log('Inside answers**');
         var say = [];
         if (this.isBoolean()) {
             return null;
@@ -61,7 +56,6 @@ Question.prototype = {
     },
 
     questionAndAnswers: function () {
-        console.log('Q & A');
         var say = [this.sayQuestion()];
         var answers = this.answers();
         if (answers) {
@@ -72,7 +66,6 @@ Question.prototype = {
     },
 
     choices: function () {
-        console.log('Choice');
         if (this.isBoolean()) {
             return 'true or false';
         }
@@ -80,19 +73,15 @@ Question.prototype = {
     },
 
     isCorrect: function(answer) {
-		console.log("Inside is correct");
-        var correct = this.q.answer;
-        console.log('Correct ' + correct);
+		var correct = this.q.answer;
         return this.q.answer.toUpperCase().slice(0, 1) === answer.toUpperCase().slice(0, 1);
     },
 
     answerText: function () {
-        console.log('Ans Txt');
         if (this.isBoolean()) {
             return this.q.answer;
         }
         var answer = this.q.answers[this.q.answer];
-        console.log("Ans Text = ans " + answer);
         if (!answer) {
             return '';
         }
@@ -100,7 +89,6 @@ Question.prototype = {
     },
 
     explanation: function () {
-        console.log("Expln");
         return this.q.explanation;
     },
 
@@ -125,8 +113,6 @@ quiz.getQuestion = function(id) {
 };
 
 quiz.getScore = function (responses) {
-    console.log('Get score');
-    // responses = {questionId: response, ... }
     if (!responses) {
         console.log('No resp');
         return 0;
