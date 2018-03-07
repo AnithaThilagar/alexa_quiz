@@ -206,7 +206,8 @@ alexaApp.intent('AnswerIntent',
             console.log(" Type " + typeof currentQuestionId + " -- " + typeof current);
             //current[currentQuestionId] = answer;
             current[10] = answer;
-            all[currentQuestionId] = answer;
+            //all[currentQuestionId] = answer;
+            all[10] = answer;
         }
         session.current = JSON.stringify(current);
         session.all = JSON.stringify(all);
@@ -217,7 +218,7 @@ alexaApp.intent('AnswerIntent',
             say.push("<s>Congratulations! You've answered ten questions.</s>");
             say.push('<s>Check your Alexa app for detailed results.</s>');
             say.push('<s>To start another quiz, say <break strength="x-strong" /> another.</s>');
-            say.push("<s>Don't forget to vote on November eighth.</s>");
+            //say.push("<s>Don't forget to vote on November eighth.</s>");
             response.card(alexaApp.card(current));
         } else {
             // get next question
