@@ -289,27 +289,30 @@ alexaApp.intent('AnswerIntent',
             say.push("<s>Don't forget to vote on November eighth.</s>");
             response.card(alexaApp.card(current));
         } else {
+            console.log("Inside NQ");
             // get next question
             var next = quiz.getNextQuestion(Object.keys(all));
             if (next) {
+                console.log('-----Next--');
                 say.push('<s>Question ' + (numQuestions + 1) + '. <break strength="x-strong" /></s>');
                 say.push(next.questionAndAnswers());
                 session.q = next.id;
                 response.shouldEndSession(false, 'What do you think? Is it ' + next.choices() + '?');
             } else {
+                console.log('--- Else ----');
                 say.push("That's all the questions I have for now. You got " + score +
-                    " correct. Remember to vote on November eighth.");
+                    " correct.");
                 response.card(alexaApp.card(current));
             }
         }
         Object.keys(session).forEach((key) => {
+            console.log('Test Line');
             response.session(key, session[key]);
         });
-        alexaApp.db.saveSession(request.userId, session).then(() => {
+        return Promise.resolve(alexaApp.db.saveSession(request.userId, session).then(() => {
             response.say(say.join('\n'));
             response.send();
-        });
-
+        }));
     }
 );
 
