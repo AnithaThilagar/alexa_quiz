@@ -58,8 +58,8 @@ alexaApp.card = function (current) {
         title: 'Quiz results',
         text: 'Sample Text \n Line2',
         image: {
-            "smallImageUrl": "https://github.com/AnithaThilagar/alexa_quiz/blob/master/Image/reportit_small.png",
-            "largeImageUrl": "https://github.com/AnithaThilagar/alexa_quiz/blob/master/Image/reportit_large.png"
+            "smallImageUrl": "https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png",
+            "largeImageUrl": "https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png"
         }
     };
     return card;
