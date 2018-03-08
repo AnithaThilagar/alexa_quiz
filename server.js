@@ -65,6 +65,8 @@ alexaApp.card = function (current) {
         }
     };*/
 
+    //Account linking card
+
     var card = {
         type : "LinkAccount"
     }
@@ -112,7 +114,7 @@ alexaApp.launch(function (request, response) {
             });
         }
 		say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
-        if (!savedSession) {
+        /*if (!savedSession) {
             say.push('<s>Each quiz has ten questions.</s>');
             say.push("<s>I'll ask a multiple choice or true false question.</s>");
             say.push('<s>Say true, false, or the letter matching your answer.</s>');
@@ -121,7 +123,8 @@ alexaApp.launch(function (request, response) {
         }
         say = say.concat(alexaApp.startQuiz(response, used));
         response.say(say.join('\n'));
-        response.send();
+        response.send();*/
+        response.card(alexaApp.card(''));
     }));
 });
 
