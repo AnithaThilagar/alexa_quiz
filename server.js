@@ -78,7 +78,7 @@ alexaApp.launch(function (request, response) {
     console.log('launch');
     console.log(request.hasSession());
     console.log('Session Obj');
-    console.log(request.getSession());
+    console.log(request.getSession().session.user.accessToken);
     console.log('Session Obj is new ');
     console.log(request.getSession().isNew());
 	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
@@ -187,7 +187,7 @@ alexaApp.intent('AnswerIntent',
             } else {
                 say.push('<s>The correct answer is ' + q.answerText() + '.</s>');
             }
-            say.push(q.explanation());
+            //say.push(q.explanation()); //Too long explanations commented and sent in the cards
             // save question and answer to current and all questions
             current[currentQuestionId] = answer;
             all[currentQuestionId] = answer;
