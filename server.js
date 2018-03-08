@@ -58,8 +58,8 @@ alexaApp.card = function (current) {
         title: 'Quiz results',
         text: 'Sample Text \n Line2',
         image: {
-            "smallImageUrl": "/Image/reportit_small.png",
-            "largeImageUrl": "/Image/reportit_large.png"
+            "smallImageUrl": "https://github.com/AnithaThilagar/alexa_quiz/blob/master/Image/reportit_small.png",
+            "largeImageUrl": "https://github.com/AnithaThilagar/alexa_quiz/blob/master/Image/reportit_large.png"
         }
     };
     return card;
@@ -87,7 +87,7 @@ alexaApp.launch(function (request, response) {
     console.log('launch');
     console.log(request.hasSession());
     console.log('Session Obj');
-    console.log(request.session);
+    console.log(request.getSession());
     console.log('Session Obj is new ');
     console.log(request.getSession().isNew());
 	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
