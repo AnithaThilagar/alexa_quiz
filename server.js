@@ -22,7 +22,7 @@ alexaApp.error = function (e, req, res) {
 
 alexaApp.card = function (current) {
     console.log('createCard: current=', current);
-    // current: {'3': 'A', '4': 'false'}
+    //Simple card
     /*var card = {
         type: 'Simple',
         title: 'Quiz results'
@@ -52,8 +52,10 @@ alexaApp.card = function (current) {
         }
         content += '\n';
     });
+
+    //Standard card
     card.content = content;*/
-    var card = {
+    /*var card = {
         type: 'Standard',
         title: 'Quiz results',
         text: 'Sample Text \n Line2',
@@ -61,7 +63,12 @@ alexaApp.card = function (current) {
             smallImageUrl: 'https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png',
             largeImageUrl: 'https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png'
         }
-    };
+    };*/
+
+    var card = {
+        type : "LinkAccount"
+    }
+
     return card;
 };
 
