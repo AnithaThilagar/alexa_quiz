@@ -76,7 +76,7 @@ alexaApp.startQuiz = function (response, used) {
 
 alexaApp.launch(function (request, response) {
     console.log('launch');
-    console.log(request);
+    console.log(request.context);
 	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
         var say = [];
