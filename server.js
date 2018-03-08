@@ -79,6 +79,8 @@ alexaApp.launch(function (request, response) {
     console.log(request.hasSession());
     console.log('Session Obj');
     console.log(request.getSession());
+    console.log('Session Obj is new ');
+    console.log(request.getSession().isNew());
 	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
         console.log('loaded session ', savedSession);
         var say = [];
