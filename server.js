@@ -23,7 +23,7 @@ alexaApp.error = function (e, req, res) {
 alexaApp.card = function (current) {
     console.log('createCard: current=', current);
     // current: {'3': 'A', '4': 'false'}
-    var card = {
+    /*var card = {
         type: 'Simple',
         title: 'Quiz results'
     };
@@ -52,7 +52,16 @@ alexaApp.card = function (current) {
         }
         content += '\n';
     });
-    card.content = content;
+    card.content = content;*/
+    var card = {
+        type: 'Standard',
+        title: 'Quiz results',
+        text: 'Sample Text \n Line2',
+        image: {
+            "smallImageUrl": "/Image/reportit_small.png",
+            "largeImageUrl": "/Image/reportit_large.png"
+        }
+    };
     return card;
 };
 
