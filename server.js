@@ -105,7 +105,8 @@ alexaApp.launch(function (request, response) {
     console.log('Session Obj is new ');
     console.log(request.getSession().isNew());
     var say = [];
-    if(request.getSession().details.accessToken){
+    if (request.getSession().details.accessToken) {
+        console.log('----Access Token available----');
         return Promise.resolve(
             getUserDetails(request.getSession().details.accessToken).then((userName) => {
                 alexaApp.db.loadSession(request.userId).then((savedSession) => {
@@ -141,6 +142,7 @@ alexaApp.launch(function (request, response) {
             });
         }));
     } else {
+        console.log('----Access Token not available----');
         response.card(alexaApp.accountLinkingCard());
         response.say('<s>Node Saga requires you to link your google account.</s>');
     }
@@ -274,6 +276,7 @@ if (process.argv.length > 2) {
 }
 
 function getUserDetails(token) {
+    console.log("Access Token is " + token);
     let options = {
         method: 'GET',
         url: 'https://report-it.auth0.com/userinfo/', 
@@ -283,8 +286,10 @@ function getUserDetails(token) {
     };
     return new Promise((resolve, reject) => {
         request(options, (error, response, body) => {
+            console.log(response);
             if (!error && response.statusCode === 200) {
                 var data = JSON.parse(body);
+                console.log(data);
                 return resolve(data.given_name);
             } else {
                 return reject(error);
