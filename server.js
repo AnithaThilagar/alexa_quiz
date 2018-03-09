@@ -98,7 +98,7 @@ alexaApp.startQuiz = function (response, used) {
 };
 
 alexaApp.launch(function (request, response) {
-    console.log('launch ' + request.hasSession());
+    console.log('launch ' + request);
     console.log('Session Obj ' + JSON.stringify(request.getSession().details.accessToken));
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
