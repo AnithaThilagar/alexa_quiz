@@ -20,10 +20,10 @@ alexaApp.error = function (e, req, res) {
     throw e;
 };
 
+//Simple card
 alexaApp.card = function (current) {
     console.log('createCard: current=', current);
-    //Simple card
-    /*var card = {
+    var card = {
         type: 'Simple',
         title: 'Quiz results'
     };
@@ -51,11 +51,14 @@ alexaApp.card = function (current) {
             content += ' (source: ' + question.q.source + ')';
         }
         content += '\n';
-    });
+    });    
+    card.content = content;
+    return card;
+};
 
-    //Standard card
-    card.content = content;*/
-    /*var card = {
+//Standard card
+alexaApp.standardCard = function () {
+    var card = {
         type: 'Standard',
         title: 'Quiz results',
         text: 'Sample Text \n Line2',
@@ -63,16 +66,17 @@ alexaApp.card = function (current) {
             smallImageUrl: 'https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png',
             largeImageUrl: 'https://cdn3.iconfinder.com/data/icons/phones-set-2/512/27-512.png'
         }
-    };*/
-
-    //Account linking card
-
-    var card = {
-        type : "LinkAccount"
-    }
-
+    };
     return card;
 };
+
+//Account linking card
+alexaApp.accountLinkingCard = function () {
+    var card = {
+        type: "LinkAccount"
+    }
+    return card;
+}
 
 alexaApp.startQuiz = function (response, used) {
 	console.log('Inside Start Quiz');
@@ -99,33 +103,37 @@ alexaApp.launch(function (request, response) {
     console.log(request.getSession().details.accessToken);
     console.log('Session Obj is new ');
     console.log(request.getSession().isNew());
-	return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
-        console.log('loaded session ', savedSession);
-        var say = [];
-        var used = [];
-        // copy saved session into current session
-        var session = savedSession || {};
-        console.log('session=', session);
-        if (session) {
-            var all = typeof session.all == 'string' ? JSON.parse(session.all || '{}') : (session.all || {});
-            used = Object.keys(all);
-            Object.keys(session).forEach((key) => {
-                response.session(key, savedSession[key]);
-            });
-        }
-		say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
-        /*if (!savedSession) {
-            say.push('<s>Each quiz has ten questions.</s>');
-            say.push("<s>I'll ask a multiple choice or true false question.</s>");
-            say.push('<s>Say true, false, or the letter matching your answer.</s>');
-            say.push('<s>To hear a question again, say repeat.</s>');
-            say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
-        }
-        say = say.concat(alexaApp.startQuiz(response, used));
-        response.say(say.join('\n'));
-        response.send();*/
-        response.card(alexaApp.card(''));
-    }));
+    if(request.getSession().details.accessToken){
+        return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
+            console.log('loaded session ', savedSession);
+            var say = [];
+            var used = [];
+            // copy saved session into current session
+            var session = savedSession || {};
+            console.log('session=', session);
+            if (session) {
+                var all = typeof session.all == 'string' ? JSON.parse(session.all || '{}') : (session.all || {});
+                used = Object.keys(all);
+                Object.keys(session).forEach((key) => {
+                    response.session(key, savedSession[key]);
+                });
+            }
+            say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
+            if (!savedSession) {
+                say.push('<s>Each quiz has ten questions.</s>');
+                say.push("<s>I'll ask a multiple choice or true false question.</s>");
+                say.push('<s>Say true, false, or the letter matching your answer.</s>');
+                say.push('<s>To hear a question again, say repeat.</s>');
+                say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
+            }
+            say = say.concat(alexaApp.startQuiz(response, used));
+            response.say(say.join('\n'));
+            response.send();
+        }));
+    } else {
+        response.card(alexaApp.accountLinkingCard());
+        response.say('<s>Node Saga requires you to link your google account.</s>');
+    }
 });
 
 alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
@@ -172,7 +180,6 @@ alexaApp.intent('AnotherIntent', function (request, response) {
 
 alexaApp.intent('AnswerIntent',
     {
-        // A B C true false
         'slots': { 'ANSWER': 'ANSWERS' },
         'utterances': [
             '{-|ANSWER}'
