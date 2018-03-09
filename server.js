@@ -196,7 +196,7 @@ alexaApp.intent('AnswerIntent',
     },
 
     function (request, response) {
-        console.log('Inside answer intent');
+        console.log('Inside answer intent ' + JSON.stringify(request));
         var session = request.sessionDetails.attributes;
         var all = typeof request.session('all') == 'string' ? JSON.parse(request.session('all') || '{}') : (request.session('all') || {});
         var current = typeof request.session('current') == 'string' ? JSON.parse(request.session('current') || '{}') : (request.session('current') || {});
