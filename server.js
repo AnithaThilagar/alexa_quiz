@@ -98,14 +98,11 @@ alexaApp.startQuiz = function (response, used) {
 };
 
 alexaApp.launch(function (request, response) {
-    //console.log('launch');
-    //console.log(request.hasSession());
-    console.log('Session Obj' + JSON.stringify(request.getSession()));
-    console.log(request.getSession());
-    //console.log('Session Obj is new ');
-    //console.log(request.getSession().isNew());
-    //var say = [];
-    /*if (request.getSession().details.accessToken) {
+    console.log('launch ' + request.hasSession());
+    console.log('Session Obj ' + JSON.stringify(request.getSession().details.accessToken));
+    console.log('Session Obj is new ' + request.getSession().isNew());
+    var say = [];
+    if (request.getSession().details.accessToken) {
         console.log('----Access Token available----');
         return Promise.resolve(
             getUserDetails(request.getSession().details.accessToken).then((userName) => {
@@ -145,7 +142,7 @@ alexaApp.launch(function (request, response) {
         console.log('----Access Token not available----');
         response.card(alexaApp.accountLinkingCard());
         response.say('<s>Node Saga requires you to link your google account.</s>');
-    }*/
+    }
 });
 
 alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
