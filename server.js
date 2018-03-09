@@ -2,6 +2,7 @@
 
 const express = require('express'),
     bodyParser = require('body-parser'),
+    request = require('request'),
     alexa = require('alexa-app'),
     app = express(),
     alexaApp = new alexa.app("NodeSaga"),
@@ -103,32 +104,41 @@ alexaApp.launch(function (request, response) {
     console.log(request.getSession().details.accessToken);
     console.log('Session Obj is new ');
     console.log(request.getSession().isNew());
+    var say = [];
     if(request.getSession().details.accessToken){
-        return Promise.resolve(alexaApp.db.loadSession(request.userId).then((savedSession) => {
-            console.log('loaded session ', savedSession);
-            var say = [];
-            var used = [];
-            // copy saved session into current session
-            var session = savedSession || {};
-            console.log('session=', session);
-            if (session) {
-                var all = typeof session.all == 'string' ? JSON.parse(session.all || '{}') : (session.all || {});
-                used = Object.keys(all);
-                Object.keys(session).forEach((key) => {
-                    response.session(key, savedSession[key]);
-                });
-            }
-            say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
-            if (!savedSession) {
-                say.push('<s>Each quiz has ten questions.</s>');
-                say.push("<s>I'll ask a multiple choice or true false question.</s>");
-                say.push('<s>Say true, false, or the letter matching your answer.</s>');
-                say.push('<s>To hear a question again, say repeat.</s>');
-                say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
-            }
-            say = say.concat(alexaApp.startQuiz(response, used));
-            response.say(say.join('\n'));
-            response.send();
+        return Promise.resolve(
+            getUserDetails(request.getSession().details.accessToken).then((userName) => {
+                alexaApp.db.loadSession(request.userId).then((savedSession) => {
+                    console.log('loaded session ', savedSession);
+                    var used = [];
+                    // copy saved session into current session
+                    var session = savedSession || {};
+                    console.log('session=', session);
+                    if (session) {
+                        var all = typeof session.all == 'string' ? JSON.parse(session.all || '{}') : (session.all || {});
+                        used = Object.keys(all);
+                        Object.keys(session).forEach((key) => {
+                            response.session(key, savedSession[key]);
+                        });
+                    }
+                    say.push('<s>Hi ' + userName + '></s>');
+                    say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
+                    if (!savedSession) {
+                        say.push('<s>Each quiz has ten questions.</s>');
+                        say.push("<s>I'll ask a multiple choice or true false question.</s>");
+                        say.push('<s>Say true, false, or the letter matching your answer.</s>');
+                        say.push('<s>To hear a question again, say repeat.</s>');
+                        say.push('<s>Say stop <break strength="medium" /> to end the quiz early.</s>');
+                    }
+                    say = say.concat(alexaApp.startQuiz(response, used));
+                    response.say(say.join('\n'));
+                    response.send();
+                }).catch((error) => {
+                    console.log("Error in acc link");
+                    console.log(error);
+                    response.say('<s>There was a problem with account linking. Try again later</s>');
+                    response.send();
+            });
         }));
     } else {
         response.card(alexaApp.accountLinkingCard());
@@ -261,6 +271,26 @@ if (process.argv.length > 2) {
     if (arg === '-u' || arg === '--utterances') {
         console.log(alexaApp.utterances());
     }
+}
+
+function getUserDetails(token) {
+    let options = {
+        method: 'GET',
+        url: 'https://report-it.auth0.com/userinfo/', 
+        headers: {
+            authorization: 'Bearer ' + token,
+        }
+    };
+    return new Promise((resolve, reject) => {
+        request(options, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
+                var data = JSON.parse(body);
+                return resolve(data.given_name);
+            } else {
+                return reject(error);
+            }
+        });
+    });
 }
 
 const server = app.listen(process.env.PORT || 5000, () => {
