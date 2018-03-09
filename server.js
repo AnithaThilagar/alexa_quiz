@@ -156,7 +156,7 @@ alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
 alexaApp.stopOrCancel = function (request, response) {
     var current = JSON.parse(request.session('current') || '{}');
     var score = quiz.getScore(current);
-    var say = ['Thanks for playing Quiz for America. '];
+    var say = ['Thanks for playing Node Saga'];
     if (Object.keys(current).length) {
         say.push('<s>You got ' + score + ' questions correct.</s>');
         response.card(alexaApp.card(current));
