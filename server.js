@@ -99,12 +99,13 @@ alexaApp.startQuiz = function (response, used) {
 
 alexaApp.launch(function (request, response) {
     console.log('launch');
-    console.log(request.hasSession());
-    console.log('Session Obj');
-    console.log(request.getSession());
-    console.log('Session Obj is new ');
-    console.log(request.getSession().isNew());
-    var say = [];
+    console.log(request);
+    //console.log(request.hasSession());
+    //console.log('Session Obj');
+    //console.log(request.getSession());
+    //console.log('Session Obj is new ');
+    //console.log(request.getSession().isNew());
+    //var say = [];
     /*if (request.getSession().details.accessToken) {
         console.log('----Access Token available----');
         return Promise.resolve(
