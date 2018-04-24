@@ -133,8 +133,7 @@ alexaApp.launch(function (request, response) {
 			console.log(error);
 			response.say('<s>There was a problem with account linking. Try again later</s>');
 			response.send();
-		});
-	);
+	}));
     /*if (request.getSession().details.accessToken) {
         console.log('----Access Token available----');
         return Promise.resolve(
