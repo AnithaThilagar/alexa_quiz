@@ -117,7 +117,7 @@ alexaApp.launch(function (request, response) {
 						response.session(key, savedSession[key]);
 					});
 				}
-				say.push('<s>Hi ' + userName + '></s>');
+				//say.push('<s>Hi ' + userName + '></s>');
 				say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
 				if (!savedSession) {
 					say.push('<s>Each quiz has ten questions.</s>');
