@@ -102,10 +102,10 @@ alexaApp.launch(function (request, response) {
     console.log('Session Obj ' + JSON.stringify(request.getSession().details.accessToken));
     console.log('Session Obj is new ' + request.getSession().isNew());
     var say = [];
-    if (request.getSession().details.accessToken) {
+    //if (request.getSession().details.accessToken) {
         console.log('----Access Token available----');
         return Promise.resolve(
-            getUserDetails(request.getSession().details.accessToken).then((userName) => {
+            //getUserDetails(request.getSession().details.accessToken).then((userName) => {
                 alexaApp.db.loadSession(request.userId).then((savedSession) => {
                     console.log('loaded session ', savedSession);
                     var used = [];
@@ -119,7 +119,7 @@ alexaApp.launch(function (request, response) {
                             response.session(key, savedSession[key]);
                         });
                     }
-                    say.push('<s>Hi ' + userName + '></s>');
+                    //say.push('<s>Hi ' + userName + '></s>');
                     say.push('<s>Welcome to Node Saga. <break strength="medium" /></s>');
                     if (!savedSession) {
                         say.push('<s>Each quiz has ten questions.</s>');
@@ -137,12 +137,13 @@ alexaApp.launch(function (request, response) {
                     response.say('<s>There was a problem with account linking. Try again later</s>');
                     response.send();
             });
-        }));
-    } else {
+        //})
+		);
+    /*} else {
         console.log('----Access Token not available----');
         response.card(alexaApp.accountLinkingCard());
         response.say('<s>Node Saga requires you to link your google account.</s>');
-    }
+    }*/
 });
 
 alexaApp.intent('AMAZON.LITERAL')
