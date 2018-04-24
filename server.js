@@ -145,6 +145,8 @@ alexaApp.launch(function (request, response) {
     }
 });
 
+alexaApp.intent('AMAZON.LITERAL')
+
 alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
     response.say('Say repeat <break strength="medium" /> to hear the question again, or stop <break strength="medium" /> to end.');
     response.shouldEndSession(false);
